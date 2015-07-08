@@ -1,0 +1,226 @@
+<html>
+	<head>
+		<script src="processing-1.4.1.js"></script>
+		<script type="text/processing" data-processing-target="mycanvas">
+			
+			void setup()
+			{
+			  size(400,400);
+			  background(125);
+			  fill(255);
+			  PFont fontA = loadFont("courier");
+			  textFont(fontA, 14);  
+			}
+			
+			var goldie = new goldFish();
+			var goldie2 = new goldFishDuplicate();
+			var biggy = new bigFish();
+			var biggy2 = new bigFishDuplicate();
+			var fishes = [goldie, goldie2, biggy, biggy2];
+			var shell = new shellFish();
+			
+			var rand1 = Math.floor(Math.random()*4);
+			println(rand1);
+			var rand2 = rand1;
+			while (rand2 === rand1){
+			rand2 = Math.floor(Math.random()*5);
+			}
+			println(rand2);
+			
+			
+			
+			void draw(){  
+			  noStroke();
+			  fill(255, 0, 0);
+			  background(125);
+			  fill(230, 237, 185);
+			  rect(0,300,500,200);
+			  
+			  fishes[rand1].drawFish();
+			  fishes[rand2].drawFish();
+			  shell.drawFish();
+			  x++;
+			}
+			
+			class goldFish{
+				void drawFish(){
+				    var smallX = mouseX - 50;
+					var smallY = mouseY + 5;
+					var smalldx = 1; 
+					
+					fill(255, 140, 25);
+					ellipse(smallX, smallY, 50, 30);
+					if(smalldx > 0){
+						triangle(smallX-40, smallY+5, smallX-40, smallY-15,smallX+5,smallY+10);
+					}
+					else{
+						triangle(smallX+40, smallY+5, smallX+40, smallY-15,smallX-5, smallY+10);
+					}
+					if(smallX >= 300 && smallX <= 330){
+						smalldx = -1;
+					}
+					else if (smallX <= 100 && smallX >= 70){
+						smalldx = 1;
+					} 
+					
+				}
+				
+			}
+			
+			class goldFishDuplicate{
+				void drawFish(){
+				    var smallX = mouseX + 50;
+					var smallY = mouseY + 50;
+					var smalldx = 1; 
+					
+					fill(255, 140, 25);
+					ellipse(smallX, smallY, 50, 30);
+					if(smalldx > 0){
+						triangle(smallX-40, smallY+5, smallX-40, smallY-15,smallX+5,smallY+10);
+					}
+					else{
+						triangle(smallX+40, smallY+5, smallX+40, smallY-15,smallX-5, smallY+10);
+					}
+					if(smallX >= 300 && smallX <= 330){
+						smalldx = -1;
+					}
+					else if (smallX <= 100 && smallX >= 70){
+						smalldx = 1;
+					} 
+					
+				}
+				
+			}
+			
+			//bigFish vars
+			var i = 0;
+			var count = 0;
+			var r = 221;
+			var g = 0;
+			var b = 255;
+			var dx = 1;
+			var XVAL = 51;
+
+		    class bigFish{
+				void drawFish(){
+				  
+					if (count%10 === 0){
+					   if (r >= 255){
+						   r=0;
+					   }
+					   if (g>= 255){
+						   g = 0;
+					   }
+					   if (b>= 255){
+						   b = 0;
+					   }
+					   r += 7;
+					   g += 7;
+					   b += 7;
+					}
+					fill(r, g, b);
+					if (dx > 0){
+						triangle(XVAL, 170, XVAL, 300, XVAL + 145, 235);
+						triangle(XVAL + 20, 235, XVAL - 50, 190, XVAL - 50, 280);
+						fill(6, 33, 6);
+						ellipse(XVAL + 115, 230, 10, 10);    
+					}
+					else{
+						triangle(XVAL, 170, XVAL, 300, XVAL -145, 235);
+						triangle(XVAL - 20, 235, XVAL + 50, 190, XVAL +50, 280);
+						fill(6, 33, 6);
+						ellipse(XVAL - 115, 230, 10, 10);
+					}
+					count++;
+					if (XVAL === 300 || XVAL === 50){
+						dx*= -1; 
+					}
+					XVAL+=dx;
+
+				}
+			}
+			
+			//bigFishDuplicate vars
+			var iDup = 0;
+			var countDup = 0;
+			var rDup = 221;
+			var gDup = 0;
+			var bDup = 255;
+			var dxDup = 2;
+			var XVALDup = 51;
+			var YCHANGE = -140;
+			
+			class bigFishDuplicate{
+				void drawFish(){
+				  
+					if (countDup%10 === 0){
+					   if (rDup >= 255){
+						   rDup=0;
+					   }
+					   if (gDup>= 255){
+						   gDup = 0;
+					   }
+					   if (bDup>= 255){
+						   bDup = 0;
+					   }
+					   rDup += 7;
+					   gDup += 7;
+					   bDup += 7;
+					}
+					fill(rDup, gDup, bDup);
+					if (dxDup > 0){
+						triangle(XVALDup, 170 + YCHANGE, XVALDup, 300+YCHANGE, XVALDup + 145, 235+YCHANGE);
+						triangle(XVALDup + 20, 235+YCHANGE, XVALDup - 50, 190+YCHANGE, XVALDup - 50, 280+YCHANGE);
+						fill(6, 33, 6);
+						ellipse(XVALDup + 115, 230+YCHANGE, 10, 10);    
+					}
+					else{
+						triangle(XVALDup, 170+YCHANGE, XVALDup, 300+YCHANGE, XVALDup -145, 235+YCHANGE);
+						triangle(XVALDup - 20, 235+YCHANGE, XVALDup + 50, 190+YCHANGE, XVALDup +50, 280+YCHANGE);
+						fill(6, 33, 6);
+						ellipse(XVALDup - 115, 230+YCHANGE, 10, 10);
+					}
+					countDup++;
+					if (XVALDup === 301 || XVALDup === 49){
+						dxDup*= -1; 
+					}
+					XVALDup+=dxDup;
+
+				}
+			}
+			
+			var x = 0;
+			class shellFish{
+                void drawFish(){
+                   
+                    if (x <= 100) {
+                        //fill(179, 39, 39);
+                        fill(255,0,0);
+                        arc(70,350,80,70,0, (3*PI/2)) ;
+                        fill(133, 191, 196);
+                        ellipse(90, 340, 10, 10);
+                        ellipse(100, 330, 10, 10);
+                        ellipse(110, 340, 10, 10);
+                        ellipse(110, 310, 10, 10);
+                        ellipse(90, 305, 10, 10);
+                    }
+                    else {
+                     fill(230, 237, 185);
+                    rect(0, 300,500,200);
+                    fill(255, 0, 0);
+                        arc(70,350,80,70,180,300);
+                        if (x === 200) {
+                            x = 0;
+                        }
+                    }
+                    x = x+1;
+                }
+           }
+
+			
+		</script>
+	</head>
+	<body>
+		<canvas id="mycanvas"></canvas>
+	</body>
+</html>
